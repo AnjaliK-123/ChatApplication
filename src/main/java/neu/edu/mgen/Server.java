@@ -152,7 +152,7 @@ public class Server implements ActionListener
         
     }
 
-    public class Model_Emoji{
+   /*  public class Model_Emoji{
         private int id;
         private Icon icon;
 
@@ -184,7 +184,7 @@ public class Server implements ActionListener
         private Model_Emoji toSize(int x, int y){
             return new Model_Emoji(id, new ImageIcon(((ImageIcon) icon).getImage().getScaledInstance(x, y, Image.SCALE_SMOOTH)));
         }
-    }
+    }*/
 
     public static void main( String[] args )
     {
