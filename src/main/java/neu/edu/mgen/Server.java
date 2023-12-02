@@ -111,7 +111,12 @@ public class Server implements ActionListener
         try{
         String output = text.getText();
       //  JLabel output1 = new JLabel(output);
-        JPanel output2 = formatLabel(output);
+        JPanel output2 = new JPanel();
+      if(output.substring(0,1).equals("/")){
+          output2 = ImgLabel(output);
+      }else{
+          output2 = formatLabel(output);
+      }
        // output2.add(output1);
         a1.setLayout(new BorderLayout());
 
@@ -151,40 +156,33 @@ public class Server implements ActionListener
         return panel;
         
     }
+    public static JPanel ImgLabel(String output){
+        JPanel panel = new JPanel();
+        // System.out.println(output);
+        // System.out.println(output.substring(0,1).equals("/"));
+        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // JLabel foutput = new JLabel("<html><p style=\"width: 150px\">"+ output + "</p></html>");
+        // foutput.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        // foutput.setBackground(Color.ORANGE);
+        // foutput.setOpaque(true);
+        // foutput.setBorder(new EmptyBorder(15, 15, 15, 50));
+        ImageIcon Icon = new ImageIcon(ClassLoader.getSystemResource("icons/logo.png"));
+        Image Icon2 = Icon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        ImageIcon Icon3 = new ImageIcon(Icon2);
+        JLabel morevert = new JLabel(Icon3);
+        // morevert.setBounds(420, 20, 10, 25);
+        panel.add(morevert);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        JLabel time = new JLabel();
+        time.setText(sdf.format(cal.getTime()));
+        panel.add(time);
+        return panel;
+        
+    }
 
-   /*  public class Model_Emoji{
-        private int id;
-        private Icon icon;
 
-        public Model_Emoji(int id, Icon icon){
-            this.id = id;
-            this.icon = icon;
-        }
-
-        public int getid(){
-            return id;
-        }
-
-        public void setId(int id){
-            this.id = id;
-        }
-
-        public Icon getIcon(){
-            return icon;
-        }
-
-        public void setIcon(Icon icon){
-            this.icon = icon;
-        }
-
-        public Model_Emoji(){
-
-        }
-
-        private Model_Emoji toSize(int x, int y){
-            return new Model_Emoji(id, new ImageIcon(((ImageIcon) icon).getImage().getScaledInstance(x, y, Image.SCALE_SMOOTH)));
-        }
-    }*/
 
     public static void main( String[] args )
     {
@@ -198,7 +196,13 @@ public class Server implements ActionListener
                 dout = new DataOutputStream(s.getOutputStream());
                 while(true){
                     String msg = din.readUTF();
-                    JPanel panel = formatLabel(msg);
+                    JPanel panel = new JPanel();
+                    if(msg.substring(0,1).equals("/")){
+                        panel = ImgLabel(msg);
+                    }else{
+                        panel = formatLabel(msg);
+                    }
+                  //  JPanel panel = formatLabel(msg);
                     JPanel left = new JPanel(new BorderLayout());
                     left.add(panel, BorderLayout.LINE_START);
                     vertical.add(left);
