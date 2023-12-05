@@ -65,15 +65,56 @@ public class Server implements ActionListener
         ImageIcon morevertImageIcon = new ImageIcon(ClassLoader.getSystemResource("icons/3icon.png"));
         Image morevertImageIcon2 = morevertImageIcon.getImage().getScaledInstance(10, 25, Image.SCALE_DEFAULT);
         ImageIcon morevertImageIcon3 = new ImageIcon(morevertImageIcon2);
-        JButton morevert = new JButton(morevertImageIcon3);
+        JLabel morevert = new JLabel(morevertImageIcon3);
         morevert.setBounds(420, 20, 10, 25);
-        morevert.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        JComboBox<String> dropdownBox = new JComboBox<>();
-        dropdownBox.addItem("Logout");
-        JPopupMenu menu = new JPopupMenu();
-        menu.add(dropdownBox); 
-        morevert.setComponentPopupMenu(menu);
         p1.add(morevert);
+        final JPopupMenu popupMenu = new JPopupMenu();
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setBounds(320, 655, 123, 40);
+        logoutButton.setBackground(Color.ORANGE);
+        logoutButton.setForeground(Color.BLACK);
+        logoutButton.addActionListener(this);
+        logoutButton.setFont(new Font("SAN SERIF", Font.PLAIN, 16));
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.setVisible(false);
+                        JFrame frame = new JFrame("Login");
+                        frame.setSize(450, 700);
+                        JPanel p1 = new JPanel();
+                        p1.setBackground(Color.ORANGE);
+                        p1.setBounds(0, 0 , 450, 70);
+                        p1.setLayout(null);
+                        frame.add(p1);
+                        JPanel p2 = new JPanel();
+                        frame.add(p2);
+
+                        ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
+                        Image arrow2 = arrow1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
+                        ImageIcon arrow3 = new ImageIcon(arrow2);
+                        JLabel back = new JLabel(arrow3);
+                        back.setBounds(5, 20, 25, 25);
+                        p1.add(back);
+                        back.addMouseListener(new MouseAdapter(){
+                            public void mouseClicked(MouseEvent var1){
+                                System.exit(0);;
+
+                            }
+                        }); 
+                        
+                        frame.setVisible(true);
+                    
+            }
+        });
+        popupMenu.add(logoutButton);
+        morevert.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent var1){
+                if (SwingUtilities.isRightMouseButton(var1)) {
+                    popupMenu.show(var1.getComponent(), var1.getX(), var1.getY());
+                }
+            }
+        });
 
         JLabel name = new JLabel("USER1");
         name.setBounds(110, 15, 100, 18);
