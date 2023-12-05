@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.text.JTextComponent;
+
 import java.text.*;
 import java.util.*;
 import java.net.*;
@@ -76,17 +78,23 @@ public class Server implements ActionListener
         logoutButton.addActionListener(this);
         logoutButton.setFont(new Font("SAN SERIF", Font.PLAIN, 16));
         logoutButton.addActionListener(new ActionListener() {
+            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 f.setVisible(false);
                         JFrame frame = new JFrame("Login");
                         frame.setSize(450, 700);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         JPanel p1 = new JPanel();
                         p1.setBackground(Color.ORANGE);
                         p1.setBounds(0, 0 , 450, 70);
                         p1.setLayout(null);
                         frame.add(p1);
                         JPanel p2 = new JPanel();
+                        
+                        placeComponents(p2);
+                        
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -103,7 +111,6 @@ public class Server implements ActionListener
                         }); 
                         
                         frame.setVisible(true);
-                    
             }
         });
         popupMenu.add(logoutButton);
@@ -115,6 +122,8 @@ public class Server implements ActionListener
                 }
             }
         });
+
+        
 
         JLabel name = new JLabel("USER1");
         name.setBounds(110, 15, 100, 18);
@@ -152,8 +161,6 @@ public class Server implements ActionListener
         f.setVisible(true);
     }
 
-   
-
     public void actionPerformed(ActionEvent var1){
         try{
         String output = text.getText();
@@ -184,8 +191,6 @@ public class Server implements ActionListener
         }
     }
    
-
-   
     public static JPanel formatLabel(String output){
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -201,8 +206,8 @@ public class Server implements ActionListener
         time.setText(sdf.format(cal.getTime()));
         panel.add(time);
         return panel;
-        
     }
+
     public static JPanel ImgLabel(String output){
         JPanel panel = new JPanel();
         // System.out.println(output);
@@ -229,10 +234,75 @@ public class Server implements ActionListener
         
     }
 
+    public static JPanel p2() {
+        JPanel p2 = new JPanel();
+        p2.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JLabel usernameLabel = new JLabel("Username: ");
+        p2.add(usernameLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        JTextField usernameField = new JTextField(20);
+        p2.add(usernameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        JLabel passwordLabel = new JLabel("Password: ");
+        p2.add(passwordLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        JPasswordField passwordField = new JPasswordField(20);
+        p2.add(passwordField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        JButton loginButton = new JButton("Login");
+        p2.add(loginButton, gbc);
+
+        return p2;
+    }
 
 
-    public static void main( String[] args )
-    {
+    
+    private static void placeComponents(JPanel p2) {
+        p2.setLayout(null);
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(100, 100, 80, 25);
+        p2.add(userLabel);
+
+        final JTextField userTextField = new JTextField(20);
+        userTextField.setBounds(180, 100, 165, 25);
+        p2.add(userTextField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(100, 150, 80, 25);
+        p2.add(passwordLabel);
+
+        final JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setBounds(180, 150, 165, 25);
+        p2.add(passwordField);
+
+        JButton loginButton = new JButton("login");
+        loginButton.setBounds(180, 200, 80, 25);
+        p2.add(loginButton);
+
+        final JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(100, 250, 200, 25);
+         p2.add(messageLabel);
+
+         
+    }
+        
+        public static void main( String[] args )
+        {
         new Server();
 
         try{
@@ -254,6 +324,7 @@ public class Server implements ActionListener
                     left.add(panel, BorderLayout.LINE_START);
                     vertical.add(left);
                     f.validate();
+                    skt.close();
                 }
             }
 

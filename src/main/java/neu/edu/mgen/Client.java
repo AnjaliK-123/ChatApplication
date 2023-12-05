@@ -79,12 +79,14 @@ public class Client implements ActionListener
                 f.setVisible(false);
                         JFrame frame = new JFrame("Login");
                         frame.setSize(450, 700);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         JPanel p1 = new JPanel();
                         p1.setBackground(Color.ORANGE);
                         p1.setBounds(0, 0 , 450, 70);
                         p1.setLayout(null);
                         frame.add(p1);
                         JPanel p2 = new JPanel();
+                        placeComponents(p2);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -222,6 +224,35 @@ public class Client implements ActionListener
         
     }
 
+    private static void placeComponents(JPanel p2) {
+        p2.setLayout(null);
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(100, 100, 80, 25);
+        p2.add(userLabel);
+
+        final JTextField userTextField = new JTextField(20);
+        userTextField.setBounds(180, 100, 165, 25);
+        p2.add(userTextField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(100, 150, 80, 25);
+        p2.add(passwordLabel);
+
+        final JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setBounds(180, 150, 165, 25);
+        p2.add(passwordField);
+
+        JButton loginButton = new JButton("login");
+        loginButton.setBounds(180, 200, 80, 25);
+        p2.add(loginButton);
+
+        final JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(100, 250, 200, 25);
+         p2.add(messageLabel);
+
+         
+    }
 
     public static void main( String[] args )
     {
