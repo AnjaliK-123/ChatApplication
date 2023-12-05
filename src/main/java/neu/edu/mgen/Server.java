@@ -65,8 +65,14 @@ public class Server implements ActionListener
         ImageIcon morevertImageIcon = new ImageIcon(ClassLoader.getSystemResource("icons/3icon.png"));
         Image morevertImageIcon2 = morevertImageIcon.getImage().getScaledInstance(10, 25, Image.SCALE_DEFAULT);
         ImageIcon morevertImageIcon3 = new ImageIcon(morevertImageIcon2);
-        JLabel morevert = new JLabel(morevertImageIcon3);
+        JButton morevert = new JButton(morevertImageIcon3);
         morevert.setBounds(420, 20, 10, 25);
+        morevert.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        JComboBox<String> dropdownBox = new JComboBox<>();
+        dropdownBox.addItem("Logout");
+        JPopupMenu menu = new JPopupMenu();
+        menu.add(dropdownBox); 
+        morevert.setComponentPopupMenu(menu);
         p1.add(morevert);
 
         JLabel name = new JLabel("USER1");
