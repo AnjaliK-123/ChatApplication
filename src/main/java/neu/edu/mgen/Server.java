@@ -5,8 +5,6 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.text.JTextComponent;
-
 import java.text.*;
 import java.util.*;
 import java.net.*;
@@ -18,10 +16,12 @@ public class Server implements ActionListener
     JPanel a1;
     static Box vertical = Box.createVerticalBox();
     static JFrame f = new JFrame();
-
-
+    JTextField usernameField; 
+    JPasswordField passwordField;
     static DataOutputStream dout;
-    Server(){
+
+    Server()
+    {
         f.setLayout(null);
         JPanel p1 = new JPanel();
         p1.setBackground(Color.ORANGE);
@@ -39,7 +39,7 @@ public class Server implements ActionListener
             public void mouseClicked(MouseEvent var1){
                 System.exit(0);;
 
-            }
+    }
         }); 
 
 
@@ -91,10 +91,9 @@ public class Server implements ActionListener
                         p1.setBounds(0, 0 , 450, 70);
                         p1.setLayout(null);
                         frame.add(p1);
+                        
                         JPanel p2 = new JPanel();
-                        
                         placeComponents(p2);
-                        
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -234,8 +233,8 @@ public class Server implements ActionListener
         
     }
 
-    public static JPanel p2() {
-        JPanel p2 = new JPanel();
+    public void  p2() {
+        final JPanel p2 = new JPanel();
         p2.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -248,17 +247,17 @@ public class Server implements ActionListener
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        JTextField usernameField = new JTextField(20);
+        final JTextField usernameField = new JTextField(20);
         p2.add(usernameField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JLabel passwordLabel = new JLabel("Password: ");
+        final JLabel passwordLabel = new JLabel("Password: ");
         p2.add(passwordLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        JPasswordField passwordField = new JPasswordField(20);
+        final JPasswordField passwordField = new JPasswordField(20);
         p2.add(passwordField, gbc);
 
         gbc.gridx = 1;
@@ -266,41 +265,72 @@ public class Server implements ActionListener
         JButton loginButton = new JButton("Login");
         p2.add(loginButton, gbc);
 
-        return p2;
-    }
-
-
-    
-    private static void placeComponents(JPanel p2) {
-        p2.setLayout(null);
-
-        JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(100, 100, 80, 25);
-        p2.add(userLabel);
+        final JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(100, 250, 200, 25);
+        p2.add(messageLabel);
 
         final JTextField userTextField = new JTextField(20);
         userTextField.setBounds(180, 100, 165, 25);
         p2.add(userTextField);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(100, 150, 80, 25);
-        p2.add(passwordLabel);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        JButton signUpButton = new JButton("Sign Up");
+        p2.add(signUpButton, gbc);
+        signUpButton.setVisible(true);
 
-        final JPasswordField passwordField = new JPasswordField(20);
-        passwordField.setBounds(180, 150, 165, 25);
-        p2.add(passwordField);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String username = userTextField.getText();
+                String password = new String(passwordField.getPassword());
 
-        JButton loginButton = new JButton("login");
-        loginButton.setBounds(180, 200, 80, 25);
-        p2.add(loginButton);
+                System.out.println("Entered username: " + username);
+                System.out.println("Entered password: " + password);
+                System.out.println("Action performed!");
 
-        final JLabel messageLabel = new JLabel("");
-        messageLabel.setBounds(100, 250, 200, 25);
-         p2.add(messageLabel);
 
-         
-    }
-        
+                // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
+                if ("testuser".equals(username) && "testpassword".equals(password)) {
+                    messageLabel.setText("Login successful");
+                } else {
+                    messageLabel.setText("Username or password is incorrect");
+                }
+            }
+         });    
+        }
+
+            private static void placeComponents(JPanel p2) 
+            {
+                p2.setLayout(null);
+
+                JLabel userLabel = new JLabel("Username:");
+                userLabel.setBounds(100, 100, 80, 25);
+                p2.add(userLabel);
+
+                final JTextField userTextField = new JTextField(20);
+                userTextField.setBounds(180, 100, 165, 25);
+                p2.add(userTextField);
+
+                JLabel passwordLabel = new JLabel("Password:");
+                passwordLabel.setBounds(100, 150, 80, 25);
+                p2.add(passwordLabel);
+
+                final JPasswordField passwordField = new JPasswordField(20);
+                passwordField.setBounds(180, 150, 165, 25);
+                p2.add(passwordField);
+
+                JButton loginButton = new JButton("login");
+                loginButton.setBounds(180, 200, 80, 25);
+                p2.add(loginButton);
+
+                final JLabel messageLabel = new JLabel("");
+                messageLabel.setBounds(100, 250, 200, 25);
+                p2.add(messageLabel);
+
+            }
+      
         public static void main( String[] args )
         {
         new Server();
