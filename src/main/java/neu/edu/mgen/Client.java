@@ -85,8 +85,9 @@ public class Client implements ActionListener
                         p1.setBounds(0, 0 , 450, 70);
                         p1.setLayout(null);
                         frame.add(p1);
+
                         JPanel p2 = new JPanel();
-                        placeComponents(p2);
+                        loginFunc(p2);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -224,7 +225,9 @@ public class Client implements ActionListener
         
     }
 
-    private static void placeComponents(JPanel p2) {
+    public static void loginFunc(JPanel p2) {
+        p2.setLayout(new GridBagLayout());
+
         p2.setLayout(null);
 
         JLabel userLabel = new JLabel("Username:");
@@ -249,10 +252,29 @@ public class Client implements ActionListener
 
         final JLabel messageLabel = new JLabel("");
         messageLabel.setBounds(100, 250, 200, 25);
-         p2.add(messageLabel);
+        p2.add(messageLabel);
 
-         
-    }
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String username = userTextField.getText();
+                String password = new String(passwordField.getPassword());
+
+                System.out.println("Entered username: " + username);
+                System.out.println("Entered password: " + password);
+                System.out.println("Action performed!");
+
+
+                // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
+                if ("testuser".equals(username) && "testpassword".equals(password)) {
+                    messageLabel.setText("Login successful");
+                } else {
+                    messageLabel.setText("Username or password is incorrect");
+                }
+            }
+         });    
+        }
 
     public static void main( String[] args )
     {
@@ -277,11 +299,10 @@ public class Client implements ActionListener
                 vertical.add(Box.createVerticalStrut(15));
                 a1.add(vertical, BorderLayout.PAGE_START);
                 f.validate();
-                s.close();
+                
             }
         } catch (Exception e){
             e.printStackTrace();
         }
     }
-
 }

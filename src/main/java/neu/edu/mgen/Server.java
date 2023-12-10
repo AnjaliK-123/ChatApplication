@@ -93,7 +93,7 @@ public class Server implements ActionListener
                         frame.add(p1);
                         
                         JPanel p2 = new JPanel();
-                        placeComponents(p2);
+                        loginFunc(p2);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -233,51 +233,34 @@ public class Server implements ActionListener
         
     }
 
-    public void  p2() {
-        final JPanel p2 = new JPanel();
+    public static void loginFunc(JPanel p2) {
         p2.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        p2.setLayout(null);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        JLabel usernameLabel = new JLabel("Username: ");
-        p2.add(usernameLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        final JTextField usernameField = new JTextField(20);
-        p2.add(usernameField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        final JLabel passwordLabel = new JLabel("Password: ");
-        p2.add(passwordLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        final JPasswordField passwordField = new JPasswordField(20);
-        p2.add(passwordField, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        JButton loginButton = new JButton("Login");
-        p2.add(loginButton, gbc);
-
-        final JLabel messageLabel = new JLabel("");
-        messageLabel.setBounds(100, 250, 200, 25);
-        p2.add(messageLabel);
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(100, 100, 80, 25);
+        p2.add(userLabel);
 
         final JTextField userTextField = new JTextField(20);
         userTextField.setBounds(180, 100, 165, 25);
         p2.add(userTextField);
 
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        JButton signUpButton = new JButton("Sign Up");
-        p2.add(signUpButton, gbc);
-        signUpButton.setVisible(true);
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(100, 150, 80, 25);
+        p2.add(passwordLabel);
+
+        final JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setBounds(180, 150, 165, 25);
+        p2.add(passwordField);
+
+        JButton loginButton = new JButton("login");
+        loginButton.setBounds(180, 200, 80, 25);
+        p2.add(loginButton);
+
+        final JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(100, 250, 200, 25);
+        p2.add(messageLabel);
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -301,35 +284,7 @@ public class Server implements ActionListener
          });    
         }
 
-            private static void placeComponents(JPanel p2) 
-            {
-                p2.setLayout(null);
-
-                JLabel userLabel = new JLabel("Username:");
-                userLabel.setBounds(100, 100, 80, 25);
-                p2.add(userLabel);
-
-                final JTextField userTextField = new JTextField(20);
-                userTextField.setBounds(180, 100, 165, 25);
-                p2.add(userTextField);
-
-                JLabel passwordLabel = new JLabel("Password:");
-                passwordLabel.setBounds(100, 150, 80, 25);
-                p2.add(passwordLabel);
-
-                final JPasswordField passwordField = new JPasswordField(20);
-                passwordField.setBounds(180, 150, 165, 25);
-                p2.add(passwordField);
-
-                JButton loginButton = new JButton("login");
-                loginButton.setBounds(180, 200, 80, 25);
-                p2.add(loginButton);
-
-                final JLabel messageLabel = new JLabel("");
-                messageLabel.setBounds(100, 250, 200, 25);
-                p2.add(messageLabel);
-
-            }
+        
       
         public static void main( String[] args )
         {
@@ -354,15 +309,14 @@ public class Server implements ActionListener
                     left.add(panel, BorderLayout.LINE_START);
                     vertical.add(left);
                     f.validate();
-                    skt.close();
+                    
+                    
                 }
             }
 
         } catch(Exception e){
             e.printStackTrace();
         }
+        
     }
-
-
-    
 }
