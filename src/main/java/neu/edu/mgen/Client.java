@@ -77,7 +77,7 @@ public class Client implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 f.setVisible(false);
-                        JFrame frame = new JFrame("Login");
+                        final JFrame frame = new JFrame("Login");
                         frame.setSize(450, 700);
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         JPanel p1 = new JPanel();
@@ -87,7 +87,7 @@ public class Client implements ActionListener
                         frame.add(p1);
 
                         JPanel p2 = new JPanel();
-                        loginFunc(p2);
+                        loginFunc(p2,frame);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -225,7 +225,7 @@ public class Client implements ActionListener
         
     }
 
-    public static void loginFunc(JPanel p2) {
+    public static void loginFunc(JPanel p2, final JFrame frame) {
         p2.setLayout(new GridBagLayout());
 
         p2.setLayout(null);
@@ -269,10 +269,11 @@ public class Client implements ActionListener
                 // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
                 if ("testuser".equals(username) && "testpassword".equals(password)) {
                     messageLabel.setText("Login successful");
-
+                    frame.setVisible(false);
                     f.dispose();
                         new Client();
                         
+
                 } else {
                     messageLabel.setText("Username or password is incorrect");
                 }
