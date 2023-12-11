@@ -19,6 +19,8 @@ public class Server implements ActionListener
     JTextField usernameField; 
     JPasswordField passwordField;
     static DataOutputStream dout;
+    
+
 
     Server()
     {
@@ -28,6 +30,7 @@ public class Server implements ActionListener
         p1.setBounds(0, 0 , 450, 70);
         p1.setLayout(null);
         f.add(p1);
+    
 
         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
         Image arrow2 = arrow1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
@@ -112,6 +115,7 @@ public class Server implements ActionListener
                         frame.setVisible(true);
             }
         });
+
         popupMenu.add(logoutButton);
         morevert.addMouseListener(new MouseAdapter(){
             @Override
@@ -191,6 +195,7 @@ public class Server implements ActionListener
     }
    
     public static JPanel formatLabel(String output){
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel foutput = new JLabel("<html><p style=\"width: 150px\">"+ output + "</p></html>");
@@ -209,15 +214,8 @@ public class Server implements ActionListener
 
     public static JPanel ImgLabel(String output){
         JPanel panel = new JPanel();
-        // System.out.println(output);
-        // System.out.println(output.substring(0,1).equals("/"));
-        
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        // JLabel foutput = new JLabel("<html><p style=\"width: 150px\">"+ output + "</p></html>");
-        // foutput.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        // foutput.setBackground(Color.ORANGE);
-        // foutput.setOpaque(true);
-        // foutput.setBorder(new EmptyBorder(15, 15, 15, 50));
+    
         ImageIcon Icon = new ImageIcon(ClassLoader.getSystemResource("icons/logo.png"));
         Image Icon2 = Icon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         ImageIcon Icon3 = new ImageIcon(Icon2);
@@ -275,33 +273,46 @@ public class Server implements ActionListener
 
 
                 // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
-                if ("testuser".equals(username) && "testpassword".equals(password)) {
+                if ("testuser".equals(username) && "testpassword".equals(password)) 
+                {
                     messageLabel.setText("Login successful");
-                } else {
+
+                    f.dispose();
+                        new Server();
+                    
+                } 
+                
+                else 
+                {
                     messageLabel.setText("Username or password is incorrect");
                 }
             }
          });    
         }
-
         
-      
+        
+        
         public static void main( String[] args )
         {
         new Server();
 
         try{
             ServerSocket skt = new ServerSocket(6001);
-            while(true){
+            while(true)
+            {
                 Socket s = skt.accept();
                 DataInputStream din = new DataInputStream(s.getInputStream());
                 dout = new DataOutputStream(s.getOutputStream());
-                while(true){
+                while(true)
+                {
                     String msg = din.readUTF();
                     JPanel panel = new JPanel();
-                    if(msg.substring(0,1).equals("/")){
+                    if(msg.substring(0,1).equals("/"))
+                    {
                         panel = ImgLabel(msg);
-                    }else{
+                    }
+                    else
+                    {
                         panel = formatLabel(msg);
                     }
                   //  JPanel panel = formatLabel(msg);
@@ -310,11 +321,12 @@ public class Server implements ActionListener
                     vertical.add(left);
                     f.validate();
                     
-                    
                 }
             }
 
-        } catch(Exception e){
+        } 
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
         

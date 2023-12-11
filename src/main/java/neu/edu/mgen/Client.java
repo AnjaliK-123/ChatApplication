@@ -269,6 +269,10 @@ public class Client implements ActionListener
                 // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
                 if ("testuser".equals(username) && "testpassword".equals(password)) {
                     messageLabel.setText("Login successful");
+
+                    f.dispose();
+                        new Client();
+                        
                 } else {
                     messageLabel.setText("Username or password is incorrect");
                 }
