@@ -96,7 +96,7 @@ public class Server implements ActionListener
                         frame.add(p1);
                         
                         JPanel p2 = new JPanel();
-                        loginFunc(p2);
+                        loginFunc(p2, frame);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -231,7 +231,7 @@ public class Server implements ActionListener
         
     }
 
-    public static void loginFunc(JPanel p2) {
+    public static void loginFunc(JPanel p2,final JFrame frame) {
         p2.setLayout(new GridBagLayout());
 
         p2.setLayout(null);
@@ -276,7 +276,7 @@ public class Server implements ActionListener
                 if ("testuser".equals(username) && "testpassword".equals(password)) 
                 {
                     messageLabel.setText("Login successful");
-
+                    frame.setVisible(false);
                     f.dispose();
                         new Server();
                     
