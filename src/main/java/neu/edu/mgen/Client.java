@@ -17,6 +17,7 @@ public class Client implements ActionListener
     static Box vertical = Box.createVerticalBox();
     static JFrame f = new JFrame();
     static DataOutputStream dout;
+    
     Client(){
         f.setLayout(null);
         JPanel p1 = new JPanel();
@@ -24,6 +25,16 @@ public class Client implements ActionListener
         p1.setBounds(0, 0 , 450, 70);
         p1.setLayout(null);
         f.add(p1);
+
+        JFrame loginFrame = new JFrame("Login");                                              
+        loginFrame.setSize(450, 700);
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel loginPanel = new JPanel();
+        loginPanel.setBackground(Color.ORANGE);
+        loginPanel.setBounds(0, 0, 450, 70);
+        loginPanel.setLayout(null);
+        loginFrame.add(loginPanel);
 
         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
         Image arrow2 = arrow1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
@@ -66,6 +77,56 @@ public class Client implements ActionListener
         JLabel morevert = new JLabel(morevertImageIcon3);
         morevert.setBounds(420, 20, 10, 25);
         p1.add(morevert);
+        final JPopupMenu popupMenu = new JPopupMenu();
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setBounds(320, 655, 123, 40);
+        logoutButton.setBackground(Color.ORANGE);
+        logoutButton.setForeground(Color.BLACK);
+        logoutButton.addActionListener(this);
+        logoutButton.setFont(new Font("SAN SERIF", Font.PLAIN, 16));
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.setVisible(false);
+                        JFrame frame = new JFrame("Login");
+                        frame.setSize(450, 700);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        JPanel p1 = new JPanel();
+                        p1.setBackground(Color.ORANGE);
+                        p1.setBounds(0, 0 , 450, 70);
+                        p1.setLayout(null);
+                        frame.add(p1);
+
+                        JPanel p2 = new JPanel();
+                        loginFunc(p2, frame);
+                        frame.add(p2);
+
+                        ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
+                        Image arrow2 = arrow1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
+                        ImageIcon arrow3 = new ImageIcon(arrow2);
+                        JLabel back = new JLabel(arrow3);
+                        back.setBounds(5, 20, 25, 25);
+                        p1.add(back);
+                        back.addMouseListener(new MouseAdapter(){
+                            public void mouseClicked(MouseEvent var1){
+                                System.exit(0);;
+
+                            }
+                        }); 
+                        
+                        frame.setVisible(true);
+                    
+            }
+        });
+        popupMenu.add(logoutButton);
+        morevert.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent var1){
+                if (SwingUtilities.isRightMouseButton(var1)) {
+                    popupMenu.show(var1.getComponent(), var1.getX(), var1.getY());
+                }
+            }
+        });
 
         JLabel name = new JLabel("USER2");
         name.setBounds(110, 15, 100, 18);
@@ -175,15 +236,73 @@ public class Client implements ActionListener
         
     }
 
+    public static void loginFunc(JPanel p2, final JFrame frame) {
+        p2.setLayout(new GridBagLayout());
+
+        p2.setLayout(null);
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(100, 100, 80, 25);
+        p2.add(userLabel);
+
+        final JTextField userTextField = new JTextField(20);
+        userTextField.setBounds(180, 100, 165, 25);
+        p2.add(userTextField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(100, 150, 80, 25);
+        p2.add(passwordLabel);
+
+        final JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setBounds(180, 150, 165, 25);
+        p2.add(passwordField);
+
+        JButton loginButton = new JButton("login");
+        loginButton.setBounds(180, 200, 80, 25);
+        p2.add(loginButton);
+
+        final JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(100, 250, 200, 25);
+        p2.add(messageLabel);
+
+        f.dispose();
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                String username = userTextField.getText();
+                String password = new String(passwordField.getPassword());
+
+                System.out.println("Entered username: " + username);
+                System.out.println("Entered password: " + password);
+                System.out.println("Action performed!");
+
+
+                // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
+                if ("testuser".equals(username) && "testpassword".equals(password)) {
+                    messageLabel.setText("Login successful");
+                    f.dispose();
+                    new Client();
+                } else {
+                    messageLabel.setText("Username or password is incorrect");
+                }
+            }
+         });    
+        }
 
     public static void main( String[] args )
     {
         new Client();
 
+         
+
         try{
             Socket s = new Socket("127.0.0.1", 6001);
             DataInputStream din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
+            
+            
             while(true){
                 a1.setLayout(new BorderLayout());
                 String msg = din.readUTF();
@@ -199,10 +318,11 @@ public class Client implements ActionListener
                 vertical.add(Box.createVerticalStrut(15));
                 a1.add(vertical, BorderLayout.PAGE_START);
                 f.validate();
+                
             }
-        } catch (Exception e){
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
-
 }
