@@ -12,6 +12,7 @@ import java.net.*;
  
 public class Server implements ActionListener
 {
+    
     JTextField text;
     JPanel a1;
     static Box vertical = Box.createVerticalBox();
@@ -21,15 +22,17 @@ public class Server implements ActionListener
     static DataOutputStream dout;
     
 
-
     Server()
-    {
+    {   
+    
+
         f.setLayout(null);
         JPanel p1 = new JPanel();
         p1.setBackground(Color.ORANGE);
         p1.setBounds(0, 0 , 450, 70);
         p1.setLayout(null);
         f.add(p1);
+    
     
 
         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -231,7 +234,11 @@ public class Server implements ActionListener
         
     }
 
-    public static void loginFunc(JPanel p2,final JFrame frame) {
+    
+
+    public static void loginFunc(JPanel p2,final JFrame frame) 
+
+    {
         p2.setLayout(new GridBagLayout());
 
         p2.setLayout(null);
@@ -253,12 +260,15 @@ public class Server implements ActionListener
         p2.add(passwordField);
 
         JButton loginButton = new JButton("login");
+
         loginButton.setBounds(180, 200, 80, 25);
         p2.add(loginButton);
 
         final JLabel messageLabel = new JLabel("");
         messageLabel.setBounds(100, 250, 200, 25);
         p2.add(messageLabel);
+
+        f.dispose();
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -272,13 +282,13 @@ public class Server implements ActionListener
                 System.out.println("Action performed!");
 
 
-                // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
+
                 if ("testuser".equals(username) && "testpassword".equals(password)) 
                 {
                     messageLabel.setText("Login successful");
                     frame.setVisible(false);
                     f.dispose();
-                        new Server();
+                    new Server();
                     
                 } 
                 
@@ -295,7 +305,17 @@ public class Server implements ActionListener
         public static void main( String[] args )
         {
         new Server();
+        
+        JFrame loginFrame = new JFrame("Login");                                              
+        loginFrame.setSize(450, 700);
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        JPanel loginPanel = new JPanel();
+        loginPanel.setBackground(Color.ORANGE);
+        loginPanel.setBounds(0, 0, 450, 70);
+        loginPanel.setLayout(null);
+        loginFrame.add(loginPanel);
+        
         try{
             ServerSocket skt = new ServerSocket(6001);
             while(true)
@@ -303,6 +323,8 @@ public class Server implements ActionListener
                 Socket s = skt.accept();
                 DataInputStream din = new DataInputStream(s.getInputStream());
                 dout = new DataOutputStream(s.getOutputStream());
+                
+                
                 while(true)
                 {
                     String msg = din.readUTF();
@@ -315,11 +337,12 @@ public class Server implements ActionListener
                     {
                         panel = formatLabel(msg);
                     }
-                  //  JPanel panel = formatLabel(msg);
+                 
                     JPanel left = new JPanel(new BorderLayout());
                     left.add(panel, BorderLayout.LINE_START);
                     vertical.add(left);
                     f.validate();
+                    skt.close();
                     
                 }
             }

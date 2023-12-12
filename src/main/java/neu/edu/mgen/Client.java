@@ -17,6 +17,7 @@ public class Client implements ActionListener
     static Box vertical = Box.createVerticalBox();
     static JFrame f = new JFrame();
     static DataOutputStream dout;
+    
     Client(){
         f.setLayout(null);
         JPanel p1 = new JPanel();
@@ -24,6 +25,16 @@ public class Client implements ActionListener
         p1.setBounds(0, 0 , 450, 70);
         p1.setLayout(null);
         f.add(p1);
+
+        JFrame loginFrame = new JFrame("Login");                                              
+        loginFrame.setSize(450, 700);
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel loginPanel = new JPanel();
+        loginPanel.setBackground(Color.ORANGE);
+        loginPanel.setBounds(0, 0, 450, 70);
+        loginPanel.setLayout(null);
+        loginFrame.add(loginPanel);
 
         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
         Image arrow2 = arrow1.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT);
@@ -77,7 +88,7 @@ public class Client implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 f.setVisible(false);
-                        final JFrame frame = new JFrame("Login");
+                        JFrame frame = new JFrame("Login");
                         frame.setSize(450, 700);
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         JPanel p1 = new JPanel();
@@ -87,7 +98,7 @@ public class Client implements ActionListener
                         frame.add(p1);
 
                         JPanel p2 = new JPanel();
-                        loginFunc(p2,frame);
+                        loginFunc(p2, frame);
                         frame.add(p2);
 
                         ImageIcon arrow1 = new ImageIcon(ClassLoader.getSystemResource("icons/3.png"));
@@ -254,6 +265,8 @@ public class Client implements ActionListener
         messageLabel.setBounds(100, 250, 200, 25);
         p2.add(messageLabel);
 
+        f.dispose();
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) 
@@ -269,11 +282,8 @@ public class Client implements ActionListener
                 // For testing purposes, let's assume "testuser" is the correct username and "testpassword" is the correct password
                 if ("testuser".equals(username) && "testpassword".equals(password)) {
                     messageLabel.setText("Login successful");
-                    frame.setVisible(false);
                     f.dispose();
-                        new Client();
-                        
-
+                    new Client();
                 } else {
                     messageLabel.setText("Username or password is incorrect");
                 }
@@ -285,10 +295,14 @@ public class Client implements ActionListener
     {
         new Client();
 
+         
+
         try{
             Socket s = new Socket("127.0.0.1", 6001);
             DataInputStream din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
+            
+            
             while(true){
                 a1.setLayout(new BorderLayout());
                 String msg = din.readUTF();
@@ -306,7 +320,8 @@ public class Client implements ActionListener
                 f.validate();
                 
             }
-        } catch (Exception e){
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
